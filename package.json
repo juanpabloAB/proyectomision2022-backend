@@ -1,0 +1,24 @@
+{
+  "name": "proyectomision2022-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juanpabloAB/proyectomision2022-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/juanpabloAB/proyectomision2022-backend/issues"
+  },
+  "homepage": "https://github.com/juanpabloAB/proyectomision2022-backend#readme",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1"
+  }
+}
