@@ -1,53 +1,44 @@
-let products = [
-    {
-      id: "0jbcksbjcksj",
-      title: "product 1",
-      descripción: "jojoj",
-      valor: 10000,
-      disponible: 10,
-    },
-    {
-      id: "0jbcksbjcksj2",
-      title: "product 1",
-      descripción: "jojoj",
-      valor: 10000,
-      disponible: 10,
-    },
-  ];
-module.exports.productsView = (req, res) => {
-    res.json(products);
-  }
+const Product = require("./models");
 
-module.exports.createProduct = (req, res) => {
-    products.push(req.body);
-    res.json(products);
-  }
+module.exports.productsView = async (req, res) => {
+  const products =  await Product.find();
+  console.log(products)
+  res.json(products);
+};
 
-  module.exports.editProducts = (req, res) => {
-    const p = products.filter(
-      (p) => p.id === req.params.id && req.body.id === req.params.id
-    );
-    console.log(p);
-    if (p.length > 0) {
-      products = [
-        ...products.filter((p) => p.id !== req.params.id),
-        { ...req.body, id: req.params.id },
-      ];
-      res.json({ message: "saved" });
-    } else {
-      res.json({ message: "No data" });
-    }
-  }
+module.exports.createProduct = async (req, res) => {
+  const product = await new Product(req.body);
+  product.save();
+  console.log(product)
+  res.json({message:'created'});
+  //res.json(products);
+};
 
-  module.exports.deleteProducts = (req, res) => {
-    const p = products.filter(
-      (p) => p.id === req.params.id && req.body.id === req.params.id
-    );
-    console.log(p);
-    if (p.length > 0) {
-      products = [...products.filter((p) => p.id !== req.params.id)];
-      res.json({ message: "deleted" });
-    } else {
-      res.json({ message: "No data" });
-    }
+module.exports.editProducts = (req, res) => {
+  const p = products.filter(
+    (p) => p.id === req.params.id && req.body.id === req.params.id
+  );
+  console.log(p);
+  if (p.length > 0) {
+    products = [
+      ...products.filter((p) => p.id !== req.params.id),
+      { ...req.body, id: req.params.id },
+    ];
+    res.json({ message: "saved" });
+  } else {
+    res.json({ message: "No data" });
   }
+};
+
+module.exports.deleteProducts = (req, res) => {
+  const p = products.filter(
+    (p) => p.id === req.params.id && req.body.id === req.params.id
+  );
+  console.log(p);
+  if (p.length > 0) {
+    products = [...products.filter((p) => p.id !== req.params.id)];
+    res.json({ message: "deleted" });
+  } else {
+    res.json({ message: "No data" });
+  }
+};
