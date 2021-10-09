@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const app = express();
 
 var router = express.Router();
-mongoose.connect('mongodb://app:secret@localhost:27017/ecommerce').then(db=> console.log('DB Connected')).catch(e=> console.log(e));
+mongoose.connect('mongodb://test:123456@localhost:27017/ecommerce').then(db=> console.log('DB Connected')).catch(e=> console.log(e));
 
 
 

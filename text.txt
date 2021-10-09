@@ -1,0 +1,46 @@
+ mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+
+mongo -u admin
+
+db.createUser(
+  {
+    user: "test",
+    pwd: "123456",
+    roles: [
+       { role: "readWrite", db: "ecommerce" },
+    ]
+  }
+)
+deb.getUsers()
+db.createUser(
+{ 
+ user: "app",
+ pwd:  "secret",
+ roles:
+ [
+ { role:"readWrite",db:"config"},
+ ] } );
+
+ db.createRole(
+   {
+     role: "appAdmin",
+     privileges: [
+       { resource: { cluster: true }, actions: [ "addShard" ] },
+       { resource: { db: "config", collection: "" }, actions: [ "find", "update", "insert", "remove" ] },
+       { resource: { db: "users", collection: "usersCollection" }, actions: [ "update", "insert", "remove" ] },
+       { resource: { db: "", collection: "" }, actions: [ "find" ] }
+     ],
+     roles: [
+       { role: "read", db: "admin" }
+     ]
+   },
+   { w: "majority" , wtimeout: 5000 }
+);
