@@ -16,7 +16,7 @@ module.exports.createView = async (req, res) => {
 module.exports.editView = async (req, res) => {  
   Model.findByIdAndUpdate(
       req.body.id,
-      {title:req.body.title},
+      req.body,
       (err, result) => {
         if (err) {
           res.send(err);

@@ -9,8 +9,8 @@ router.get("/", views.ListView);
 
 router.post("/new", views.createView);
 
-router.put("/:id/edit", views.editView);
+router.put("/edit", views.editView);
 
-router.delete("/:id/delete", views.deleteView);
+router.delete("/delete", views.deleteView);
 
 module.exports = router;
