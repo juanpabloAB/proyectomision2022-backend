@@ -1,21 +1,22 @@
-const Product = require("./models");
+const Model = require("./models");
 
-module.exports.productsView = async (req, res) => {
-  const products = await Product.find();
-  res.json(products);
+module.exports.ListView = async (req, res) => {
+  const obj = await Model.find();
+  res.json(obj);
 };
 
-module.exports.createProduct = async (req, res) => {
-  const product = await new Product(req.body);
-  product.save();
+module.exports.createView = async (req, res) => {
+  const obj = await new Model(req.body);
+  obj.save();
+
   res.json({ message: "created" });
   //res.json(products);
 };
 
-module.exports.editProducts = async (req, res) => {  
-    Product.findByIdAndUpdate(
+module.exports.editView = async (req, res) => {  
+  Model.findByIdAndUpdate(
       req.body.id,
-      {title:req.body.title},
+      req.body,
       (err, result) => {
         if (err) {
           res.send(err);
@@ -31,8 +32,8 @@ module.exports.editProducts = async (req, res) => {
   
 };
 
-module.exports.deleteProducts = async (req, res) => {
-  await Product.findByIdAndRemove({ _id: req.body.id }, (err) => {
+module.exports.deleteView = async (req, res) => {
+  await Model.findByIdAndRemove({ _id: req.body.id }, (err) => {
     if (err) {
       res.json({ message: err });
     } else {

@@ -5,21 +5,12 @@ const router = express.Router();
 
 
 
-router.get("/", views.productsView);
+router.get("/", views.ListView);
 
-router.post("/new", views.createProduct);
+router.post("/new", views.createView);
 
-router.get("/:id", (req, res) => {
-  const p = products.filter((p) => p.id === req.params.id);
-  if (p.length > 0) {
-    res.json(p[0]);
-  } else {
-    res.json({ message: "No data" });
-  }
-});
+router.put("/edit", views.editView);
 
-router.put("/:id/edit", views.editProducts);
-
-router.delete("/:id/delete", views.deleteProducts);
+router.delete("/delete", views.deleteView);
 
 module.exports = router;
