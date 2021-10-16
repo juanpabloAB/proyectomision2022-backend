@@ -1,13 +1,14 @@
 const mongoose = require("mongoose");
 const uuid = require("uuid");
 
-const Schema = mongoose.Schema;
-const ProductsSchema = new Schema({
-  _id: { type: String, default: uuid.v1 },
-  title: String,
-  description: String,
-  value: Number,
-  stock: Number,
+const ProductsSchema =  mongoose.Schema({
+  title: {type: String, required : true},
+  description: {type: String, /*required : true*/},
+  price: {type: Number, required : true},
+  stock: {type: Number, required : true},
+  aviable: {type: Boolean, required : true}, 
+  link: {type: String, /*required : true*/}
 });
 
 module.exports = mongoose.model("Products", ProductsSchema);
+  
