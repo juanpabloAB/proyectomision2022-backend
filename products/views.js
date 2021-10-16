@@ -7,10 +7,13 @@ module.exports.ListView = async (req, res) => {
 
 module.exports.createView = async (req, res) => {
   const obj = await new Model(req.body);
-  obj.save();
-
-  res.json({ message: "created" });
-  //res.json(products);
+  obj.save()
+  .then((createdProduct) => {
+    res.status(201).json("Creado satisfactoriamente");
+  })
+  .catch((error) => {
+    res.status(201).json("No fue posible crear el producto");
+  });
 };
 
 module.exports.editView = async (req, res) => {  
@@ -19,17 +22,14 @@ module.exports.editView = async (req, res) => {
       req.body,
       (err, result) => {
         if (err) {
-          res.send(err);
+          res.status(201).json("Actualizado satisfactoriamente");
         } else {
           res.send(result);
         }
       }
     ).clone().catch(err=>{
-      res.json({err})
+      res.status(201).json("No fue posible actualizar el producto");
     });
-  
-
-  
 };
 
 module.exports.deleteView = async (req, res) => {
