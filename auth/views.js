@@ -5,6 +5,7 @@ const {
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
   JWT_SECRET,
+  REDIRECT_URI_FRONT
 } = require("../config.js");
 const utils = require("./utils");
 const redirectURI = "/google";
@@ -26,7 +27,7 @@ function getTokens(code, client_id, client_secret, redirect_uri) {
     redirect_uri,
     grant_type:"authorization_code",
   };
-  console.log(new URLSearchParams(values))
+  
   return axios
     .post(url, new URLSearchParams(values), {
       headers: {
@@ -54,7 +55,8 @@ module.exports.getUser = async (req, res) => {
   })
     .then((res) => res.data)
     .catch((err) => err);
-  console.log(googleUser);
+  //console.log(googleUser);
   const token = jwt.sign(googleUser, JWT_SECRET, {expiresIn:'1d'});
-  res.json({user:token.toString()});
+  console.log(`${REDIRECT_URI_FRONT}?${new URLSearchParams({token: token.toString()})}`)
+  res.redirect(`${REDIRECT_URI_FRONT}?${new URLSearchParams({ auth:'google', token: token.toString()})}`);
 };

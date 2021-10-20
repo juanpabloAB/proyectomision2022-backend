@@ -10,8 +10,9 @@ mongoose.connect('mongodb://test:123456@localhost:27017/ecommerce').then(db=> co
 app.use(cors());
 
 function authMiddle(req, res, next){
+  
   try {
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(req.headers.authorization, JWT_SECRET);
     res.user = decoded;
     next()
   } catch(err) {
