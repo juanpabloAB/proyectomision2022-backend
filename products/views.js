@@ -12,7 +12,7 @@ module.exports.createView = async (req, res) => {
     res.status(201).json("Creado satisfactoriamente");
   })
   .catch((error) => {
-    res.status(201).json("No fue posible crear el producto");
+    res.status(400).json("No fue posible crear el producto");
   });
 };
 
@@ -21,7 +21,7 @@ module.exports.editView = async (req, res) => {
       req.body.id,
       req.body,
       (err, result) => {
-        if (err) {
+        if (!err) {
           res.status(201).json("Actualizado satisfactoriamente");
         } else {
           res.send(result);

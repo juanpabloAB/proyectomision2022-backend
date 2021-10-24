@@ -3,10 +3,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
-const {JWT_SECRET } = require('./config.js');
+const {JWT_SECRET, MONGO_PASSWORD, MONGO_USER } = require('./config.js');
 const app = express();
 app.use(express.json());
-mongoose.connect('mongodb://test:123456@localhost:27017/ecommerce').then(db=> console.log('DB Connected')).catch(e=> console.log(e));
+mongoose.connect(`mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}@cluster0.hxmav.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`).then(db=> console.log('DB Connected')).catch(e=> console.log(e));
 app.use(cors());
 
 function authMiddle(req, res, next){
@@ -24,10 +24,12 @@ function authMiddle(req, res, next){
 let products = require('./products/routes')
 let sales = require('./sales/routes')
 let auth = require('./auth/routes')
+let users = require('./users/routes')
 const port = 3030;
 app.use('/auth', auth)
 app.use('/products', authMiddle, products)
 app.use('/sales', authMiddle, sales)
+app.use('/users', authMiddle, users)
 app.listen(port, () => {
   console.log(`Listening at port:${port}`);
 });
