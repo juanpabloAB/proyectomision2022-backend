@@ -13,7 +13,7 @@ const UserSchema = new Schema({
   picture: String,
   locale: String,
   admin: { type: Boolean, default: false },
-  
+  active: { type: Boolean, default: true },
 });
 
 module.exports = mongoose.model("User", UserSchema);
