@@ -7,32 +7,22 @@ module.exports.ListView = async (req, res) => {
   res.json(obj);
 };
 
-module.exports.editView = async (req, res) => {  
-  try {
-    const decoded = jwt.verify(req.headers.authorization, JWT_SECRET);
-    res.user = decoded;
-    if (decoded.admin){
-      Model.findByIdAndUpdate(
-        req.body.id,
-        req.body,
-        (err, result) => {
-          if (err) {
-            res.send(err);
-          } else {
-            res.send(result);
-          }
-        }
-      ).clone().catch(err=>{
-        res.json({err})
+module.exports.editView = async (req, res) => {
+  if (req.user.admin) {
+    Model.findByIdAndUpdate(req.body.id, req.body, (err, result) => {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send(result);
+      }
+    })
+      .clone()
+      .catch((err) => {
+        res.json({ err });
       });
-    }else{
-      res.json({'message':'Not Authorized'})
-    }
-  } catch(err) {
-    // err
-    res.json({message:'not auth'})
-  }   
-  res.json({'message':'Not Authorized'})
+  } else {
+    res.json({ message: "Not Authorized" });
+  }
 };
 
 module.exports.deleteView = async (req, res) => {
@@ -42,7 +32,9 @@ module.exports.deleteView = async (req, res) => {
     } else {
       res.json({ message: "deleted" });
     }
-  }).clone().catch(err=>{
-    res.json({err})
-  });;
+  })
+    .clone()
+    .catch((err) => {
+      res.json({ err });
+    });
 };
