@@ -3,7 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
-const {JWT_SECRET, MONGO_PASSWORD, MONGO_USER } = require('./config.js');
+const {JWT_SECRET, MONGO_PASSWORD, MONGO_USER, PORT } = require('./config.js');
 const app = express();
 
 app.use(express.static(__dirname + '/public'));
@@ -36,7 +36,7 @@ let products = require('./products/routes')
 let sales = require('./sales/routes')
 let auth = require('./auth/routes')
 let users = require('./users/routes')
-const port = 3030;
+const port = PORT || 80;
 app.use('/auth', auth)
 app.use('/products', authMiddle, products)
 app.use('/sales', authMiddle, sales)
